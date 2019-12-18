@@ -70,7 +70,41 @@ class AddNewFriend extends React.Component {
             .catch(err => {
                 console.log(err)
             })
-            axiosWithAuth()
+        axiosWithAuth()
+            .get('/friends')
+            .then(res => {
+                console.log(res)
+                // thought this would make react update
+                // infinite loop?
+                this.setState({
+                    ...this.state,
+                    friends: res.data
+                })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+    deleteFriend = e => {
+        e.preventDefault()
+        axiosWithAuth()
+        .delete(`/friends/${this.state.newFriend.id}`, this.state.newFriend)
+        .then(res => {
+            console.log(res)
+            this.setState({
+                newFriend : {
+                    name: '',
+                    age: '',
+                    email: '',
+                    id: ''
+                }
+            })
+            // this.props.history.push('/addNewFriend')
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    axiosWithAuth()
             .get('/friends')
             .then(res => {
                 console.log(res)
@@ -122,37 +156,7 @@ class AddNewFriend extends React.Component {
                 console.log(err)
             })
     }
-    // newFunction = () => {
 
-    // }
-    // componentDidUpdate = (prevProps) => {
-
-    //     // Typical usage (don't forget to compare props):
-    //     console.log(prevProps)
-    //     if(prevProps.friends) {
-    //         console.log(this.state.friends.length, prevProps.friends)
-
-    //         if(this.state.friends.length !== prevProps.friends.length) {
-    //             // this.fetchData(this.props.userID);
-    //             axiosWithAuth()
-    //                 .get('/friends')
-    //                 .then(res => {
-    //                     console.log(res)
-    //                     // thought this would make react update
-    //                     // infinite loop?
-    //                     this.setState({
-    //                         ...this.state,
-    //                         friends: res.data
-    //                     })
-    //                 })
-    //                 .catch(err => {
-    //                     console.log(err)
-    //                 })
-    //         }
-    //     }
-        
-        
-    // }
     render() {
 
         return (
@@ -193,9 +197,9 @@ class AddNewFriend extends React.Component {
                             onChange={this.handleAgeChange}
 
                         />
-                        <button onClick={this.addNewFriend}>Add</button>
-                        <button onClick={this.updateFriend}>UpdateFriend</button>
-
+                        <button onClick={this.addNewFriend}>Add Friend</button>
+                        <button onClick={this.updateFriend}>Update Friend</button>
+                        <button onClick={this.deleteFriend}>Delete Friend</button>
                     </form>
             </div>
             
