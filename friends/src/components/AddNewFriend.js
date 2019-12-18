@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { axiosWithAuth } from '../utils/axiosWithAuth'
-
+import { Friend } from './Friend';
 class AddNewFriend extends React.Component {
 
     state = {
@@ -165,7 +165,14 @@ class AddNewFriend extends React.Component {
             <div>
                 <div>
                 {this.state.friends.map((friend, i ) => (
-                    <p key={i}>{friend.name}</p>
+                    <Friend key={i}
+                        name={friend.name}
+                        age={friend.age}
+                        email={friend.email} />
+                    // <p key={i}>{friend.name}</p>
+                    // <p key={i + 1}>{friend.age}</p>
+                    // <p key={i + 2}>{friend.age}</p>
+
                 ))}
                 </div>
                 <form >
